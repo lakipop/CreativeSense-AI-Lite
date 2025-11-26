@@ -1,0 +1,18 @@
+/* Thin scrollbar style adapted from Ecotheme */
+.thin-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(226, 13, 38, 0.748);
+    border-radius: 4px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(233, 30, 57, 0.8);
+}

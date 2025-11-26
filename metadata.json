@@ -1,0 +1,8 @@
+{
+  "name": "CreativeSense AI",
+  "description": "Advanced multimodal AI application featuring real-time screen analysis with AI narration, voice chat, video analysis, and text chat. Built with Google Gemini 2.5 Flash for creative content analysis and research.",
+  "requestFramePermissions": [
+    "microphone",
+    "display-capture"
+  ]
+}
