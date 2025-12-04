@@ -348,11 +348,11 @@ const VideoAnalyzer: React.FC = () => {
       {/* Main Content Area */}
       <div className="h-full w-full flex flex-col bg-white/50 dark:bg-zinc-900/50">
         {/* Header */}
-        <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm flex-shrink-0">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+        <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm flex-shrink-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
               <button
-                className="md:hidden p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                className="md:hidden p-1.5 sm:p-2 rounded-lg sm:rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 onClick={() => setIsSidebarOpen(true)}
               >
                 <svg
@@ -370,17 +370,17 @@ const VideoAnalyzer: React.FC = () => {
                   />
                 </svg>
               </button>
-              <h2 className="text-lg font-bold tracking-tight">
-                Video & Image Analyzer<span className="text-primary">.</span>
+              <h2 className="text-sm sm:text-base md:text-lg font-bold tracking-tight">
+                Video Analyzer<span className="text-primary">.</span>
               </h2>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <select
                 value={videoStyle}
                 onChange={(e) =>
                   setVideoStyle(e.target.value as DescriptionStyle)
                 }
-                className="px-3 py-1.5 rounded-xl bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-primary/30 max-w-[70px] sm:max-w-none"
               >
                 {Object.keys(videoStyleConfigs).map((s) => (
                   <option key={s} value={s}>
@@ -388,10 +388,11 @@ const VideoAnalyzer: React.FC = () => {
                   </option>
                 ))}
               </select>
-              <div className="flex items-center gap-1 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+              {/* Detail buttons - hidden on mobile */}
+              <div className="hidden sm:flex items-center gap-1 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
                 <button
                   onClick={() => setDetailLevel("short")}
-                  className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
+                  className={`px-2 sm:px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
                     detailLevel === "short"
                       ? "bg-white dark:bg-zinc-700 shadow-sm"
                       : ""
@@ -401,17 +402,17 @@ const VideoAnalyzer: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setDetailLevel("medium")}
-                  className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
+                  className={`px-2 sm:px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
                     detailLevel === "medium"
                       ? "bg-white dark:bg-zinc-700 shadow-sm"
                       : ""
                   }`}
                 >
-                  Medium
+                  Med
                 </button>
                 <button
                   onClick={() => setDetailLevel("long")}
-                  className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
+                  className={`px-2 sm:px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
                     detailLevel === "long"
                       ? "bg-white dark:bg-zinc-700 shadow-sm"
                       : ""
@@ -421,7 +422,7 @@ const VideoAnalyzer: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setDetailLevel("full")}
-                  className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
+                  className={`px-2 sm:px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
                     detailLevel === "full"
                       ? "bg-primary text-zinc-950 shadow-sm"
                       : ""
@@ -430,6 +431,17 @@ const VideoAnalyzer: React.FC = () => {
                   Full
                 </button>
               </div>
+              {/* Mobile detail selector */}
+              <select
+                value={detailLevel}
+                onChange={(e) => setDetailLevel(e.target.value as any)}
+                className="sm:hidden px-2 py-1 rounded-lg bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700"
+              >
+                <option value="short">Short</option>
+                <option value="medium">Med</option>
+                <option value="long">Long</option>
+                <option value="full">Full</option>
+              </select>
             </div>
           </div>
         </div>

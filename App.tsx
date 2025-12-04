@@ -93,15 +93,15 @@ const App: React.FC = () => {
 
       {/* Premium Header with Glassmorphism */}
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo & Brand */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-primary/10 dark:to-secondary/10 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center flex-shrink-0 relative overflow-hidden group">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-primary/10 dark:to-secondary/10 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center flex-shrink-0 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-0 group-hover:opacity-20 transition-opacity"></div>
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-7 h-7"
+                  className="w-5 h-5 sm:w-7 sm:h-7"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -141,14 +141,14 @@ const App: React.FC = () => {
                 </svg>
               </div>
               <div className="flex flex-col">
-                <h1 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">
+                <h1 className="text-base sm:text-lg font-bold tracking-tight text-zinc-900 dark:text-white">
                   CreativeSense
                   <span className="text-primary">.</span>
-                  <span className="text-zinc-400 dark:text-zinc-500 font-medium">
+                  <span className="text-zinc-400 dark:text-zinc-500 font-medium text-sm sm:text-base">
                     AI
                   </span>
                 </h1>
-                <span className="text-[10px] text-zinc-500 dark:text-zinc-600 font-mono tracking-wider hidden sm:block">
+                <span className="text-[9px] sm:text-[10px] text-zinc-500 dark:text-zinc-600 font-mono tracking-wider hidden sm:block">
                   MULTIMODAL PLATFORM
                 </span>
               </div>
@@ -221,10 +221,10 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Content - Offset for fixed header */}
-      <main className="flex-1 pt-16 relative z-10">
-        <div className="h-[calc(100vh-4rem)] max-w-7xl mx-auto w-full">
-          <div className="h-full p-4 sm:p-6">
-            <div className="h-full rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm shadow-xl shadow-zinc-900/5 dark:shadow-black/20">
+      <main className="flex-1 pt-14 sm:pt-16 relative z-10">
+        <div className="h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] max-w-7xl mx-auto w-full">
+          <div className="h-full p-2 sm:p-4 md:p-6">
+            <div className="h-full rounded-xl sm:rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm shadow-xl shadow-zinc-900/5 dark:shadow-black/20">
               {renderActiveView()}
             </div>
           </div>

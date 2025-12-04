@@ -484,12 +484,12 @@ const LiveConversation: React.FC<LiveConversationProps> = ({
       {/* Main Area */}
       <div className="flex-1 flex flex-col h-full overflow-hidden relative bg-white/50 dark:bg-zinc-900/50">
         {/* Header */}
-        <header className="flex flex-col gap-3 px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm">
+        <header className="flex flex-col gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm">
           <div className="w-full flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsSidebarOpen(true)}
-                className="md:hidden p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors"
+                className="md:hidden p-1.5 sm:p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg sm:rounded-xl transition-colors"
               >
                 <svg
                   className="w-5 h-5"
@@ -505,22 +505,22 @@ const LiveConversation: React.FC<LiveConversationProps> = ({
                   />
                 </svg>
               </button>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <span
-                  className={`w-2.5 h-2.5 rounded-full ${
+                  className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${
                     isActive
                       ? "bg-mainBtn animate-pulse shadow-lg shadow-mainBtn/50"
                       : "bg-zinc-400"
                   }`}
                 ></span>
-                <span className="font-bold text-sm">{status}</span>
+                <span className="font-bold text-xs sm:text-sm">{status}</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <select
                 value={selectedVoice}
                 onChange={(e) => setSelectedVoice(e.target.value)}
-                className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg sm:rounded-xl px-2 sm:px-3 py-1 sm:py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30 max-w-[65px] sm:max-w-none"
               >
                 {DEFAULT_PREBUILT_VOICE_NAMES.map((name) => (
                   <option key={name} value={name}>
@@ -528,34 +528,48 @@ const LiveConversation: React.FC<LiveConversationProps> = ({
                   </option>
                 ))}
               </select>
-              <label className="flex items-center gap-2 text-xs font-medium cursor-pointer">
+              <label className="hidden xs:flex items-center gap-1 sm:gap-2 text-xs font-medium cursor-pointer">
                 <input
                   type="checkbox"
                   checked={isSinhala}
                   onChange={(e) => setIsSinhala(e.target.checked)}
-                  className="rounded accent-primary"
+                  className="rounded accent-primary w-3 h-3"
                 />
-                Sinhala
+                <span className="hidden sm:inline">Sinhala</span>
+                <span className="sm:hidden">SI</span>
               </label>
-              <div className="text-xs text-zinc-500 font-mono hidden sm:block">
-                Native Audio
-              </div>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            {Object.keys(liveConversationStyleConfigs).map((s) => (
-              <button
-                key={s}
-                onClick={() => setDescriptionStyle(s as DescriptionStyle)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all ${
-                  descriptionStyle === s
-                    ? "bg-primary text-zinc-950 shadow-sm"
-                    : "bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
-                }`}
-              >
-                {liveConversationStyleConfigs[s as DescriptionStyle].name}
-              </button>
-            ))}
+          {/* Style buttons - show dropdown on mobile, buttons on desktop */}
+          <div className="flex items-center gap-2">
+            <select
+              value={descriptionStyle}
+              onChange={(e) =>
+                setDescriptionStyle(e.target.value as DescriptionStyle)
+              }
+              className="sm:hidden px-2 py-1 rounded-lg bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 flex-1"
+            >
+              {Object.keys(liveConversationStyleConfigs).map((s) => (
+                <option key={s} value={s}>
+                  {liveConversationStyleConfigs[s as DescriptionStyle].name}
+                </option>
+              ))}
+            </select>
+            <div className="hidden sm:flex flex-wrap items-center gap-2">
+              {Object.keys(liveConversationStyleConfigs).map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setDescriptionStyle(s as DescriptionStyle)}
+                  className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all ${
+                    descriptionStyle === s
+                      ? "bg-primary text-zinc-950 shadow-sm"
+                      : "bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                  }`}
+                >
+                  {liveConversationStyleConfigs[s as DescriptionStyle].name}
+                </button>
+              ))}
+            </div>
           </div>
         </header>
 
