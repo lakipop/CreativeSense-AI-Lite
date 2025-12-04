@@ -520,7 +520,7 @@ const LiveConversation: React.FC<LiveConversationProps> = ({
               <select
                 value={selectedVoice}
                 onChange={(e) => setSelectedVoice(e.target.value)}
-                className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg sm:rounded-xl px-2 sm:px-3 py-1 sm:py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30 max-w-[65px] sm:max-w-none"
+                className="text-xs font-medium border rounded-lg sm:rounded-xl px-2 sm:px-3 py-1 sm:py-1.5 focus:outline-none w-[70px] sm:w-auto truncate"
               >
                 {DEFAULT_PREBUILT_VOICE_NAMES.map((name) => (
                   <option key={name} value={name}>

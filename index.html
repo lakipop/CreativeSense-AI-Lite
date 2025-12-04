@@ -49,6 +49,7 @@
               "spin-slow": "spin 8s linear infinite",
               blob: "blob 7s infinite",
               "pulse-glow": "pulseGlow 2s ease-in-out infinite",
+              "slide-up": "slideUp 0.3s ease-out forwards",
             },
             keyframes: {
               float: {
@@ -73,6 +74,10 @@
                   boxShadow: "0 0 40px rgba(var(--color-primary), 0.5)",
                 },
               },
+              slideUp: {
+                "0%": { transform: "translateY(100%)" },
+                "100%": { transform: "translateY(0)" },
+              },
             },
           },
         },
@@ -83,24 +88,37 @@
 
       /* CSS Variables for Dynamic Color Theming */
       :root {
-        /* Light Mode: Soft, eye-friendly colors */
-        /* Primary - Soft teal/emerald for main accents */
+        /* Light Mode Colors */
         --color-primary: 16 185 129;
-        /* Secondary - Soft sky blue for secondary elements */
         --color-secondary: 56 189 248;
-        /* Main button - Soft emerald that's visible but not harsh */
         --color-main-btn: 52 211 153;
-        --bg-main: #dddfe1dd;
+        
+        /* Surface colors for light mode */
+        --bg-main: #f1f5f9;
+        --bg-surface: #ffffff;
+        --bg-surface-alt: #f8fafc;
+        --bg-card: #ffffff;
+        --bg-input: #ffffff;
+        --border-color: #e2e8f0;
         --text-main: #1e293b;
+        --text-muted: #64748b;
       }
 
       html.dark {
-        /* Dark Mode: Primary → Cyan, Secondary → Green */
+        /* Dark Mode Colors */
         --color-primary: 34 211 238;
         --color-secondary: 16 185 129;
         --color-main-btn: 16 185 129;
+        
+        /* Surface colors for dark mode */
         --bg-main: #09090b;
+        --bg-surface: #18181b;
+        --bg-surface-alt: #27272a;
+        --bg-card: #18181b;
+        --bg-input: #27272a;
+        --border-color: #3f3f46;
         --text-main: #e4e4e7;
+        --text-muted: #a1a1aa;
       }
 
       html,
@@ -189,25 +207,113 @@
       /* Mobile select dropdown fix */
       @media (max-width: 640px) {
         select {
-          font-size: 16px !important; /* Prevents iOS zoom */
+          font-size: 16px !important;
+          max-width: 100% !important;
         }
       }
 
-      /* Light mode specific overrides for better visibility */
-      html:not(.dark) .bg-mainBtn {
-        background-color: rgb(var(--color-main-btn)) !important;
+      /* ========================================
+         GLOBAL COLOR OVERRIDES
+         These ensure CSS variables work everywhere
+         ======================================== */
+      
+      /* Primary/Secondary/MainBtn already work via Tailwind config */
+      
+      /* Surface backgrounds - override Tailwind defaults */
+      .bg-white {
+        background-color: var(--bg-surface) !important;
+      }
+      
+      .bg-zinc-50, .bg-slate-50, .bg-gray-50 {
+        background-color: var(--bg-surface-alt) !important;
+      }
+      
+      .bg-zinc-100, .bg-slate-100, .bg-gray-100 {
+        background-color: var(--bg-surface-alt) !important;
+      }
+      
+      /* Dark mode surface backgrounds */
+      .dark .bg-zinc-800, .dark .bg-slate-800, .dark .bg-gray-800 {
+        background-color: var(--bg-surface-alt) !important;
+      }
+      
+      .dark .bg-zinc-900, .dark .bg-slate-900, .dark .bg-gray-900 {
+        background-color: var(--bg-surface) !important;
+      }
+      
+      .dark .bg-zinc-950, .dark .bg-slate-950, .dark .bg-gray-950 {
+        background-color: var(--bg-main) !important;
       }
 
-      html:not(.dark) .text-primary {
-        color: rgb(var(--color-primary)) !important;
+      /* Border colors */
+      .border-zinc-200, .border-slate-200, .border-gray-200 {
+        border-color: var(--border-color) !important;
+      }
+      
+      .dark .border-zinc-700, .dark .border-slate-700, .dark .border-gray-700,
+      .dark .border-zinc-800, .dark .border-slate-800, .dark .border-gray-800 {
+        border-color: var(--border-color) !important;
       }
 
-      html:not(.dark) .bg-primary {
-        background-color: rgb(var(--color-primary)) !important;
+      /* Input styling */
+      select, input[type="text"], input[type="email"], input[type="password"], textarea {
+        background-color: var(--bg-input) !important;
+        border-color: var(--border-color) !important;
+        color: var(--text-main) !important;
       }
 
-      html:not(.dark) .border-primary {
-        border-color: rgb(var(--color-primary)) !important;
+      /* Muted text */
+      .text-zinc-500, .text-zinc-400, .text-slate-500, .text-slate-400 {
+        color: var(--text-muted) !important;
+      }
+
+      /* ========================================
+         CUSTOM UTILITY CLASSES
+         Use these instead of Tailwind classes
+         to ensure CSS variables work properly
+         ======================================== */
+      
+      /* Main background - use on component root */
+      .cs-bg-main {
+        background-color: var(--bg-main) !important;
+      }
+      
+      /* Surface background - use on cards, panels */
+      .cs-bg-surface {
+        background-color: var(--bg-surface) !important;
+      }
+      
+      /* Surface with transparency */
+      .cs-bg-surface-50 {
+        background-color: color-mix(in srgb, var(--bg-surface) 50%, transparent) !important;
+      }
+      
+      .cs-bg-surface-80 {
+        background-color: color-mix(in srgb, var(--bg-surface) 80%, transparent) !important;
+      }
+      
+      /* Alt surface */
+      .cs-bg-surface-alt {
+        background-color: var(--bg-surface-alt) !important;
+      }
+      
+      /* Card background */
+      .cs-bg-card {
+        background-color: var(--bg-card) !important;
+      }
+      
+      /* Border color */
+      .cs-border {
+        border-color: var(--border-color) !important;
+      }
+      
+      /* Text colors */
+      .cs-text {
+        color: var(--text-main) !important;
+      }
+      
+      .cs-text-muted {
+        color: var(--text-muted) !important;
       }
     </style>
     <script type="importmap">
@@ -223,7 +329,7 @@
       }
     </script>
   </head>
-  <body class="bg-zinc-50 dark:bg-zinc-950">
+  <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

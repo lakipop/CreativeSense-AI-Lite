@@ -10,6 +10,7 @@ type Theme = "light" | "dark";
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>("screen");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== "undefined" && window.localStorage) {
       const storedTheme = window.localStorage.getItem("theme");
@@ -157,18 +158,17 @@ const App: React.FC = () => {
             </nav>
 
             {/* Mobile Navigation */}
-            <div className="md:hidden flex items-center gap-3">
-              <select
-                value={activeView}
-                onChange={(e) => setActiveView(e.target.value as View)}
-                className="px-3 py-2 rounded-xl bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/50"
+            <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-800 text-sm font-medium"
               >
-                {navItems.map((n) => (
-                  <option key={n.id} value={n.id}>
-                    {n.icon} {n.label}
-                  </option>
-                ))}
-              </select>
+                <span>{navItems.find(n => n.id === activeView)?.icon}</span>
+                <span>{navItems.find(n => n.id === activeView)?.label}</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-primary border border-zinc-200 dark:border-zinc-800"
@@ -194,6 +194,40 @@ const App: React.FC = () => {
           </div>
         </div>
       </main>
+
+      {/* Mobile Navigation Bottom Sheet */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          {/* Sheet */}
+          <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 rounded-t-2xl p-4 pb-8 animate-slide-up">
+            <div className="w-12 h-1 bg-zinc-300 dark:bg-zinc-700 rounded-full mx-auto mb-4" />
+            <div className="space-y-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveView(item.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
+                    activeView === item.id
+                      ? "bg-primary text-zinc-950 font-bold"
+                      : "bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                  }`}
+                >
+                  <span className="text-xl">{item.icon}</span>
+                  <span className="font-medium">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
