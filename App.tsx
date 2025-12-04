@@ -97,48 +97,12 @@ const App: React.FC = () => {
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo & Brand */}
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-primary/10 dark:to-secondary/10 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center flex-shrink-0 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                <svg
-                  viewBox="0 0 100 100"
-                  className="w-5 h-5 sm:w-7 sm:h-7"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="20"
-                    y="35"
-                    width="60"
-                    height="40"
-                    className="fill-zinc-700 dark:fill-zinc-500"
-                  />
-                  <rect
-                    x="25"
-                    y="40"
-                    width="50"
-                    height="30"
-                    className="fill-primary"
-                  />
-                  <circle
-                    cx="35"
-                    cy="55"
-                    r="8"
-                    className="fill-zinc-900 dark:fill-zinc-950"
-                  />
-                  <circle
-                    cx="65"
-                    cy="55"
-                    r="8"
-                    className="fill-zinc-900 dark:fill-zinc-950"
-                  />
-                  <rect
-                    x="45"
-                    y="60"
-                    width="10"
-                    height="10"
-                    className="fill-zinc-900 dark:fill-zinc-950"
-                  />
-                </svg>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 bg-zinc-900 dark:bg-transparent">
+                <img
+                  src="/CreativeSense.png"
+                  alt="CreativeSense AI"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="flex flex-col">
                 <h1 className="text-base sm:text-lg font-bold tracking-tight text-zinc-900 dark:text-white">
