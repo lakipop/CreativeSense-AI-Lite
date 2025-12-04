@@ -16,6 +16,7 @@ import { ScreenDescriberSession, Content, ContentPart } from "../types";
 import { decode, decodeAudioData } from "../utils/audio";
 import { DescriptionStyle, styleConfigs } from "./styles/styleConfig";
 import { DEFAULT_PREBUILT_VOICE_NAMES } from "../utils/voices";
+import CustomSelect from "./CustomSelect";
 import "./styles/thin-scrollbar.css";
 
 const STORAGE_KEY = "screen_describer_sessions";
@@ -981,7 +982,7 @@ const ScreenDescriber: React.FC = () => {
   }, [isDragging, isResizing, handlePipMouseMove]);
 
   return (
-    <div className="bg-zinc-50 dark:bg-zinc-950 flex flex-col md:flex-row h-full w-full text-zinc-900 dark:text-zinc-100 font-sans">
+    <div className="cs-bg-main cs-text flex flex-col md:flex-row h-full w-full font-sans">
       {/* Sidebar */}
       <div className="hidden md:flex w-64 border-r border-zinc-200 dark:border-zinc-800/50 flex-col flex-shrink-0 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-sm">
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800">
@@ -1071,45 +1072,41 @@ const ScreenDescriber: React.FC = () => {
             {/* Voice controls - row 1 */}
             <div className="flex items-center gap-1.5 overflow-hidden">
               {/* Voice type selector */}
-              <select
+              <CustomSelect
                 value={voiceType}
-                onChange={(e) => setVoiceType(e.target.value as any)}
-                className="px-2 py-1 rounded-lg bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 min-w-0 flex-shrink"
-              >
-                <option value="free">Free</option>
-                <option value="premium">Pro</option>
-              </select>
+                onChange={(v) => setVoiceType(v as any)}
+                options={[
+                  { value: "free", label: "Free" },
+                  { value: "premium", label: "Pro" },
+                ]}
+                className="w-[60px]"
+              />
 
-              {/* Voice name selector - truncated */}
+              {/* Voice name selector */}
               {voiceType === "free" ? (
-                <select
+                <CustomSelect
                   value={selectedVoice?.name || ""}
-                  onChange={(e) =>
+                  onChange={(v) =>
                     setSelectedVoice(
-                      availableVoices.find((v) => v.name === e.target.value) ||
-                        null
+                      availableVoices.find((voice) => voice.name === v) || null
                     )
                   }
-                  className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-2 py-1 focus:outline-none min-w-0 max-w-[80px] sm:max-w-[120px] truncate"
-                >
-                  {availableVoices.map((v) => (
-                    <option key={v.name} value={v.name}>
-                      {v.name.split(" ").slice(0, 2).join(" ")}
-                    </option>
-                  ))}
-                </select>
+                  options={availableVoices.map((v) => ({
+                    value: v.name,
+                    label: v.name.split(" ").slice(0, 2).join(" "),
+                  }))}
+                  className="w-[90px] sm:w-[120px]"
+                />
               ) : (
-                <select
+                <CustomSelect
                   value={premiumVoice}
-                  onChange={(e) => setPremiumVoice(e.target.value)}
-                  className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-2 py-1 focus:outline-none min-w-0 max-w-[80px] sm:max-w-[120px]"
-                >
-                  {DEFAULT_PREBUILT_VOICE_NAMES.map((name) => (
-                    <option key={name} value={name}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setPremiumVoice}
+                  options={DEFAULT_PREBUILT_VOICE_NAMES.map((name) => ({
+                    value: name,
+                    label: name,
+                  }))}
+                  className="w-[90px] sm:w-[120px]"
+                />
               )}
               {isSharing ? (
                 <div className="flex items-center gap-2">

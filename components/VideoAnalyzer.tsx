@@ -11,6 +11,7 @@ import { extractFramesFromVideo } from "../utils/video";
 import { videoStyleConfigs } from "./styles/featureStyleConfig";
 import { DescriptionStyle } from "./styles/styleConfig";
 import { AnalyzerChatMessage } from "../types";
+import CustomSelect from "./CustomSelect";
 
 // Helper to convert a file to a base64 string
 const fileToBase64 = (file: File): Promise<string> => {
@@ -294,7 +295,7 @@ const VideoAnalyzer: React.FC = () => {
   };
 
   return (
-    <div className="bg-zinc-50 dark:bg-zinc-950 flex flex-col md:flex-row h-full w-full text-zinc-900 dark:text-zinc-100 font-sans">
+    <div className="cs-bg-main cs-text flex flex-col md:flex-row h-full w-full font-sans">
       {/* History Sidebar */}
       <div className="hidden md:flex w-64 border-r border-zinc-200 dark:border-zinc-800/50 flex-col flex-shrink-0 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-sm">
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800">
@@ -375,19 +376,15 @@ const VideoAnalyzer: React.FC = () => {
               </h2>
             </div>
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <select
+              <CustomSelect
                 value={videoStyle}
-                onChange={(e) =>
-                  setVideoStyle(e.target.value as DescriptionStyle)
-                }
-                className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-primary/30 max-w-[70px] sm:max-w-none"
-              >
-                {Object.keys(videoStyleConfigs).map((s) => (
-                  <option key={s} value={s}>
-                    {videoStyleConfigs[s as DescriptionStyle].name}
-                  </option>
-                ))}
-              </select>
+                onChange={(v) => setVideoStyle(v as DescriptionStyle)}
+                options={Object.keys(videoStyleConfigs).map((s) => ({
+                  value: s,
+                  label: videoStyleConfigs[s as DescriptionStyle].name,
+                }))}
+                className="w-[80px] sm:w-[100px]"
+              />
               {/* Detail buttons - hidden on mobile */}
               <div className="hidden sm:flex items-center gap-1 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
                 <button
@@ -432,16 +429,17 @@ const VideoAnalyzer: React.FC = () => {
                 </button>
               </div>
               {/* Mobile detail selector */}
-              <select
+              <CustomSelect
                 value={detailLevel}
-                onChange={(e) => setDetailLevel(e.target.value as any)}
-                className="sm:hidden px-2 py-1 rounded-lg bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700"
-              >
-                <option value="short">Short</option>
-                <option value="medium">Med</option>
-                <option value="long">Long</option>
-                <option value="full">Full</option>
-              </select>
+                onChange={(v) => setDetailLevel(v as any)}
+                options={[
+                  { value: "short", label: "Short" },
+                  { value: "medium", label: "Med" },
+                  { value: "long", label: "Long" },
+                  { value: "full", label: "Full" },
+                ]}
+                className="sm:hidden w-[70px]"
+              />
             </div>
           </div>
         </div>

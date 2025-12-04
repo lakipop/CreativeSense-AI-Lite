@@ -9,6 +9,7 @@ import { getGeminiClient } from "../utils/geminiClient";
 import { chatStyleConfigs } from "./styles/featureStyleConfig";
 import { DescriptionStyle } from "./styles/styleConfig";
 import { ChatMessage } from "../types";
+import CustomSelect from "./CustomSelect";
 
 const CHATBOT_HISTORY_KEY = "chatbot_sessions";
 
@@ -427,7 +428,7 @@ const ChatBot: React.FC = () => {
 
   return (
     <>
-      <div className="bg-zinc-50 dark:bg-zinc-950 flex flex-col md:flex-row h-full w-full text-zinc-900 dark:text-zinc-100 font-sans">
+      <div className="cs-bg-main cs-text flex flex-col md:flex-row h-full w-full font-sans">
         {/* History Sidebar */}
         <div className="hidden md:flex w-64 border-r border-zinc-200 dark:border-zinc-800/50 flex-col flex-shrink-0 bg-zinc-50/80 dark:bg-zinc-900/80 backdrop-blur-sm">
           <div className="p-4 border-b border-zinc-200 dark:border-zinc-800">
@@ -509,19 +510,15 @@ const ChatBot: React.FC = () => {
               </div>
               {/* Mobile: Show only style selector */}
               <div className="flex md:hidden items-center gap-1.5">
-                <select
+                <CustomSelect
                   value={chatStyle}
-                  onChange={(e) =>
-                    setChatStyle(e.target.value as DescriptionStyle)
-                  }
-                  className="px-2 py-1 rounded-lg bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 focus:outline-none max-w-[80px]"
-                >
-                  {Object.keys(chatStyleConfigs).map((s) => (
-                    <option key={s} value={s}>
-                      {chatStyleConfigs[s as DescriptionStyle].name}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(v) => setChatStyle(v as DescriptionStyle)}
+                  options={Object.keys(chatStyleConfigs).map((s) => ({
+                    value: s,
+                    label: chatStyleConfigs[s as DescriptionStyle].name,
+                  }))}
+                  className="w-[80px]"
+                />
                 <label className="flex items-center gap-1 text-xs font-medium cursor-pointer">
                   <input
                     type="checkbox"
@@ -534,19 +531,15 @@ const ChatBot: React.FC = () => {
               </div>
               {/* Desktop: Show all controls */}
               <div className="hidden md:flex flex-wrap items-center gap-2">
-                <select
+                <CustomSelect
                   value={chatStyle}
-                  onChange={(e) =>
-                    setChatStyle(e.target.value as DescriptionStyle)
-                  }
-                  className="px-3 py-1.5 rounded-xl bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-primary/30"
-                >
-                  {Object.keys(chatStyleConfigs).map((s) => (
-                    <option key={s} value={s}>
-                      {chatStyleConfigs[s as DescriptionStyle].name}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(v) => setChatStyle(v as DescriptionStyle)}
+                  options={Object.keys(chatStyleConfigs).map((s) => ({
+                    value: s,
+                    label: chatStyleConfigs[s as DescriptionStyle].name,
+                  }))}
+                  className="w-[100px]"
+                />
                 <div className="flex items-center gap-1 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
                   <button
                     onClick={() => setVoiceType("free")}
@@ -579,29 +572,25 @@ const ChatBot: React.FC = () => {
                   Sinhala
                 </label>
                 {voiceType === "free" ? (
-                  <select
+                  <CustomSelect
                     value={selectedVoiceName}
-                    onChange={(e) => setSelectedVoiceName(e.target.value)}
-                    className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  >
-                    {availableVoices.map((v) => (
-                      <option key={v.name} value={v.name}>
-                        {v.name}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={setSelectedVoiceName}
+                    options={availableVoices.map((v) => ({
+                      value: v.name,
+                      label: v.name.split(" ").slice(0, 2).join(" "),
+                    }))}
+                    className="w-[120px]"
+                  />
                 ) : (
-                  <select
+                  <CustomSelect
                     value={prebuiltVoice}
-                    onChange={(e) => setPrebuiltVoice(e.target.value)}
-                    className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  >
-                    {DEFAULT_PREBUILT_VOICE_NAMES.map((name) => (
-                      <option key={name} value={name}>
-                        {name}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={setPrebuiltVoice}
+                    options={DEFAULT_PREBUILT_VOICE_NAMES.map((name) => ({
+                      value: name,
+                      label: name,
+                    }))}
+                    className="w-[100px]"
+                  />
                 )}
               </div>
             </div>

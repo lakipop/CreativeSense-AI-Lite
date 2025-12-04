@@ -84,7 +84,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen font-sans flex flex-col transition-colors duration-300 selection:bg-primary/30">
+    <div className="cs-bg-main cs-text min-h-screen font-sans flex flex-col transition-colors duration-300 selection:bg-primary/30">
       {/* Animated Background Blobs - Dark Mode Only */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-5%] w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob dark:block hidden"></div>

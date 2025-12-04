@@ -5,6 +5,7 @@ import { TranscriptionTurn } from "../types";
 import { DEFAULT_PREBUILT_VOICE_NAMES } from "../utils/voices";
 import { liveConversationStyleConfigs } from "./styles/featureStyleConfig";
 import { DescriptionStyle, StyleConfig } from "./styles/styleConfig";
+import CustomSelect from "./CustomSelect";
 
 interface ConversationSession {
   id: string;
@@ -420,7 +421,7 @@ const LiveConversation: React.FC<LiveConversationProps> = ({
   };
 
   return (
-    <div className="flex h-full w-full bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans overflow-hidden">
+    <div className="flex h-full w-full cs-bg-main cs-text font-sans overflow-hidden">
       {/* Sidebar */}
       <div
         className={`fixed inset-y-0 left-0 z-30 w-72 bg-zinc-50/95 dark:bg-zinc-900/95 backdrop-blur-xl border-r border-zinc-200 dark:border-zinc-800 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${
@@ -517,17 +518,15 @@ const LiveConversation: React.FC<LiveConversationProps> = ({
               </div>
             </div>
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <select
+              <CustomSelect
                 value={selectedVoice}
-                onChange={(e) => setSelectedVoice(e.target.value)}
-                className="text-xs font-medium border rounded-lg sm:rounded-xl px-2 sm:px-3 py-1 sm:py-1.5 focus:outline-none w-[70px] sm:w-auto truncate"
-              >
-                {DEFAULT_PREBUILT_VOICE_NAMES.map((name) => (
-                  <option key={name} value={name}>
-                    {name}
-                  </option>
-                ))}
-              </select>
+                onChange={setSelectedVoice}
+                options={DEFAULT_PREBUILT_VOICE_NAMES.map((name) => ({
+                  value: name,
+                  label: name,
+                }))}
+                className="w-[75px] sm:w-[100px]"
+              />
               <label className="hidden xs:flex items-center gap-1 sm:gap-2 text-xs font-medium cursor-pointer">
                 <input
                   type="checkbox"
@@ -542,19 +541,15 @@ const LiveConversation: React.FC<LiveConversationProps> = ({
           </div>
           {/* Style buttons - show dropdown on mobile, buttons on desktop */}
           <div className="flex items-center gap-2">
-            <select
+            <CustomSelect
               value={descriptionStyle}
-              onChange={(e) =>
-                setDescriptionStyle(e.target.value as DescriptionStyle)
-              }
-              className="sm:hidden px-2 py-1 rounded-lg bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 flex-1"
-            >
-              {Object.keys(liveConversationStyleConfigs).map((s) => (
-                <option key={s} value={s}>
-                  {liveConversationStyleConfigs[s as DescriptionStyle].name}
-                </option>
-              ))}
-            </select>
+              onChange={(v) => setDescriptionStyle(v as DescriptionStyle)}
+              options={Object.keys(liveConversationStyleConfigs).map((s) => ({
+                value: s,
+                label: liveConversationStyleConfigs[s as DescriptionStyle].name,
+              }))}
+              className="sm:hidden w-[90px]"
+            />
             <div className="hidden sm:flex flex-wrap items-center gap-2">
               {Object.keys(liveConversationStyleConfigs).map((s) => (
                 <button
