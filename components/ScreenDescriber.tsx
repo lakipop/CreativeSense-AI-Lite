@@ -1035,9 +1035,10 @@ const ScreenDescriber: React.FC = () => {
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 h-full overflow-hidden bg-white/50 dark:bg-zinc-900/50">
         {/* Header */}
-        <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm flex-shrink-0">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
+        <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm flex-shrink-0 overflow-hidden">
+          {/* Top row: Title + Main controls */}
+          <div className="flex items-center justify-between gap-2 mb-2 sm:mb-0">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <button
                 className="md:hidden p-1.5 sm:p-2 rounded-lg sm:rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 onClick={() => setIsSidebarOpen(true)}
@@ -1061,54 +1062,25 @@ const ScreenDescriber: React.FC = () => {
                 <h2 className="text-sm sm:text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
                   Screen<span className="text-primary">.</span>
                 </h2>
-                <p className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 font-mono truncate max-w-[80px] sm:max-w-none">
+                <p className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 font-mono truncate max-w-[60px] sm:max-w-none">
                   {status}
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap items-center gap-1 sm:gap-2">
-              {/* Desktop voice type buttons */}
-              <div className="hidden sm:flex items-center gap-1 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
-                <button
-                  onClick={() => setVoiceType("free")}
-                  className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
-                    voiceType === "free"
-                      ? "bg-secondary text-zinc-950 shadow-sm"
-                      : "hover:bg-zinc-200 dark:hover:bg-zinc-700"
-                  }`}
-                >
-                  Free ♾️
-                </button>
-                <button
-                  onClick={() => setVoiceType("premium")}
-                  className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
-                    voiceType === "premium"
-                      ? "bg-purple-500 text-white shadow-sm"
-                      : "hover:bg-zinc-200 dark:hover:bg-zinc-700"
-                  }`}
-                >
-                  Premium ⚠️
-                </button>
-              </div>
-              {/* Mobile voice type selector */}
+
+            {/* Voice controls - row 1 */}
+            <div className="flex items-center gap-1.5 overflow-hidden">
+              {/* Voice type selector */}
               <select
                 value={voiceType}
                 onChange={(e) => setVoiceType(e.target.value as any)}
-                className="sm:hidden px-2 py-1 rounded-lg bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700"
+                className="px-2 py-1 rounded-lg bg-white dark:bg-zinc-800 text-xs font-medium border border-zinc-200 dark:border-zinc-700 min-w-0 flex-shrink"
               >
                 <option value="free">Free</option>
                 <option value="premium">Pro</option>
               </select>
-              <label className="hidden xs:flex items-center gap-1 text-xs font-medium cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={isSinhala}
-                  onChange={(e) => setIsSinhala(e.target.checked)}
-                  className="rounded accent-primary w-3 h-3"
-                />
-                <span className="hidden sm:inline">Sinhala</span>
-                <span className="sm:hidden">SI</span>
-              </label>
+
+              {/* Voice name selector - truncated */}
               {voiceType === "free" ? (
                 <select
                   value={selectedVoice?.name || ""}
@@ -1118,11 +1090,11 @@ const ScreenDescriber: React.FC = () => {
                         null
                     )
                   }
-                  className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg sm:rounded-xl px-2 sm:px-3 py-1 sm:py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30 max-w-[60px] sm:max-w-none"
+                  className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-2 py-1 focus:outline-none min-w-0 max-w-[80px] sm:max-w-[120px] truncate"
                 >
                   {availableVoices.map((v) => (
                     <option key={v.name} value={v.name}>
-                      {v.name}
+                      {v.name.split(" ").slice(0, 2).join(" ")}
                     </option>
                   ))}
                 </select>
@@ -1130,7 +1102,7 @@ const ScreenDescriber: React.FC = () => {
                 <select
                   value={premiumVoice}
                   onChange={(e) => setPremiumVoice(e.target.value)}
-                  className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg sm:rounded-xl px-2 sm:px-3 py-1 sm:py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30 max-w-[60px] sm:max-w-none"
+                  className="text-xs font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-2 py-1 focus:outline-none min-w-0 max-w-[80px] sm:max-w-[120px]"
                 >
                   {DEFAULT_PREBUILT_VOICE_NAMES.map((name) => (
                     <option key={name} value={name}>
